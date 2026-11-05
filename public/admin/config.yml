@@ -3,7 +3,7 @@
 # Remote editing: needs the GitHub OAuth worker — see README.
 backend:
   name: github
-  repo: progscratchm/maximecousot.com
+  repo: progscratchm/mywebsite
   branch: main
   # base_url: https://YOUR-WORKER.workers.dev   # uncomment once the OAuth worker is deployed
 

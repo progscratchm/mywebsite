@@ -58,9 +58,10 @@ point at them) are stand-ins — delete them once there are real photos.
 
 ## Going live on maximecousot.com
 
-The domain is currently at GoDaddy showing their default placeholder page.
+The site is live at https://github.com/progscratchm/mywebsite and deploys on every
+push to `main`. The domain is still at GoDaddy showing their placeholder page.
 
-**1. Push this repo to GitHub** (e.g. `progscratchm/maximecousot.com`).
+**1. Push this repo to GitHub** (e.g. `progscratchm/mywebsite`).
 
 **2. Turn on Pages:** repo → Settings → Pages → Source = **GitHub Actions**.
 `.github/workflows/deploy.yml` builds and deploys on every push to `main`.
@@ -79,7 +80,9 @@ Delete GoDaddy's existing A/CNAME records for `@` and `www` first (those are
 what serve the "Be happy!" placeholder). Keep any MX records if email is on
 that domain.
 
-**4. In repo Settings → Pages → Custom domain**, enter `maximecousot.com` and
+**4. Set the custom domain.** With GitHub Actions as the Pages source, the
+`public/CNAME` file does *not* set the domain on its own — it must also be set in
+the repo: Settings → Pages → Custom domain, enter `maximecousot.com` and
 tick **Enforce HTTPS** once the certificate is issued (can take up to an hour).
 `public/CNAME` already carries the domain through each build.
 
