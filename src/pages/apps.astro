@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const apps = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Apps" description="Apps Maxime has made, including the ones on the App Store.">
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker">Shipped it!</p>
+      <h1>📱 My apps</h1>
+      <p class="lede">Real apps you can download and play with.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:28px">
+    <div class="wrap">
+      {apps.length === 0 ? (
+        <p class="empty">The first app is still in the oven. 🍪</p>
+      ) : (
+        <div class="grid two">
+          {apps.map((a) => (
+            <div class="card app-card">
+              {a.data.icon ? (
+                <img class="icon" src={a.data.icon} alt={`${a.data.title} icon`} />
+              ) : (
+                <span class="icon" aria-hidden="true">📱</span>
+              )}
+              <div>
+                <h3>{a.data.title}</h3>
+                <p>{a.data.tagline}</p>
+                <p class="meta">{a.data.price}</p>
+                <p style="margin-top:10px">
+                  {a.data.appStore && <a class="btn" href={a.data.appStore}>App Store →</a>}
+                  {a.data.repo && <a class="btn ghost" href={a.data.repo} style="margin-left:8px">Code 💻</a>}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

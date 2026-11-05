@@ -1,0 +1,158 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site } from '../site';
+
+const live = <T extends { data: { draft?: boolean } }>(items: T[]) =>
+  items.filter((i) => !i.data.draft);
+
+const posts = live(await getCollection('posts'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const projects = live(await getCollection('projects'))
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const apps = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.order);
+const photos = (await getCollection('photos'))
+  .sort((a, b) => a.data.order - b.data.order || b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+---
+<Base>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">Welcome to the lab</p>
+        <h1>Hi, I'm <span class="hl">Maxime</span>.<br />I'm 8 and I build things.</h1>
+        <p class="lede">
+          I invent machines, write code, make apps and ask a <em>lot</em> of questions.
+          This is where I keep everything I'm working on.
+        </p>
+        <div class="badges">
+          <a class="btn" href="/projects/">See my inventions 🔧</a>
+          <a class="btn alt" href="/apps/">My apps 📱</a>
+          <a class="btn ghost" href="/blog/">Notebook 📓</a>
+        </div>
+      </div>
+      <div class="blob" aria-hidden="true">🧑‍🔬</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>🔧 Latest inventions</h2>
+        <a class="more" href="/projects/">All inventions →</a>
+      </div>
+      {projects.length === 0 ? (
+        <p class="empty">No inventions here yet. The first one is being built right now!</p>
+      ) : (
+        <div class="grid three">
+          {projects.map((p) => (
+            <ProjectCard
+              href={`/projects/${p.id}/`}
+              title={p.data.title}
+              summary={p.data.summary}
+              emoji={p.data.emoji}
+              cover={p.data.cover}
+              status={p.data.status}
+              tech={p.data.tech}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>📓 From my notebook</h2>
+        <a class="more" href="/blog/">All posts →</a>
+      </div>
+      {posts.length === 0 ? (
+        <p class="empty">The first notebook page is still blank.</p>
+      ) : (
+        <div class="grid three">
+          {posts.map((p) => (
+            <PostCard
+              href={`/blog/${p.id}/`}
+              title={p.data.title}
+              summary={p.data.summary}
+              emoji={p.data.emoji}
+              cover={p.data.cover}
+              meta={fmt(p.data.date)}
+              tags={p.data.tags}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  {apps.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>📱 On the App Store</h2>
+          <a class="more" href="/apps/">All apps →</a>
+        </div>
+        <div class="grid two">
+          {apps.slice(0, 2).map((a) => (
+            <div class="card app-card">
+              {a.data.icon ? (
+                <img class="icon" src={a.data.icon} alt={`${a.data.title} icon`} />
+              ) : (
+                <span class="icon" aria-hidden="true">📱</span>
+              )}
+              <div>
+                <h3>{a.data.title}</h3>
+                <p>{a.data.tagline}</p>
+                {a.data.appStore && (
+                  <p style="margin-top:10px"><a class="btn ghost" href={a.data.appStore}>Get it →</a></p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {photos.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>📸 Snapshots</h2>
+          <a class="more" href="/photos/">Photo wall →</a>
+        </div>
+        <div class="grid three">
+          {photos.map((p) => (
+            <figure class="photo" style="margin:0">
+              <img src={p.data.image} alt={p.data.caption ?? p.data.title} loading="lazy" />
+              <figcaption>{p.data.title}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="wrap">
+      <div class="callout">
+        <h2 style="margin-top:0">Want to say hi? 👋</h2>
+        <p style="margin:0">
+          Maxime loves hearing what other kids are building. Messages go to his parents first —
+          ask a grown-up to write to <a href="mailto:hello@maximecousot.com">hello@maximecousot.com</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

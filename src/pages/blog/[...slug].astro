@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.filter((p) => !p.data.draft).map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+<Base title={post.data.title} description={post.data.summary} image={post.data.cover}>
+  <article>
+    <header class="page-head post-head">
+      <div class="wrap">
+        <p><a href="/blog/">← Back to the notebook</a></p>
+        <span class="emoji-big" aria-hidden="true">{post.data.emoji}</span>
+        <h1>{post.data.title}</h1>
+        <p class="post-meta">{fmt(post.data.date)}</p>
+        {post.data.tags.length > 0 && (
+          <span class="tags">{post.data.tags.map((t: string) => <span class="tag">#{t}</span>)}</span>
+        )}
+      </div>
+    </header>
+    <div class="section" style="padding-top:24px">
+      <div class="wrap">
+        {post.data.cover && (
+          <img
+            src={post.data.cover}
+            alt=""
+            style="border:3px solid var(--ink);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:28px"
+          />
+        )}
+        <div class="prose"><Content /></div>
+      </div>
+    </div>
+  </article>
+</Base>

@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+
+const posts = (await getCollection('posts'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+---
+<Base title="Notebook" description="Maxime's notebook: what he is learning, making and wondering about.">
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker">Page by page</p>
+      <h1>📓 My notebook</h1>
+      <p class="lede">Things I made, things that broke, and things I figured out.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:28px">
+    <div class="wrap">
+      {posts.length === 0 ? (
+        <p class="empty">No pages yet — check back soon!</p>
+      ) : (
+        <div class="grid three">
+          {posts.map((p) => (
+            <PostCard
+              href={`/blog/${p.id}/`}
+              title={p.data.title}
+              summary={p.data.summary}
+              emoji={p.data.emoji}
+              cover={p.data.cover}
+              meta={fmt(p.data.date)}
+              tags={p.data.tags}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

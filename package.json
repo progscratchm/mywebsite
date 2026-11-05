@@ -1,0 +1,19 @@
+{
+  "name": "maximecousot-com",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "cms": "npx -y @sveltia/cms-proxy-server"
+  },
+  "devDependencies": {
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.6.0",
+    "astro": "^5.17.0",
+    "sharp": "^0.34.4"
+  }
+}

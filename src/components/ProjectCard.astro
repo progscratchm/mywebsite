@@ -1,0 +1,25 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  summary?: string;
+  emoji?: string;
+  cover?: string;
+  status?: string;
+  tech?: string[];
+}
+const { href, title, summary, emoji = '🔧', cover, status = 'building', tech = [] } = Astro.props;
+const labels: Record<string, string> = {
+  idea: '💭 Idea',
+  building: '🔨 Building it',
+  works: '✅ It works!',
+  finished: '🎉 Finished',
+};
+---
+<a class="card tilt" href={href}>
+  {cover ? <img class="thumb" src={cover} alt="" loading="lazy" /> : <span class="emoji" aria-hidden="true">{emoji}</span>}
+  <h3>{title}</h3>
+  <span><span class={`pill ${status}`}>{labels[status] ?? status}</span></span>
+  {summary && <p>{summary}</p>}
+  {tech.length > 0 && <span class="tags">{tech.map((t) => <span class="tag">{t}</span>)}</span>}
+</a>

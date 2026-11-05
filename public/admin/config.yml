@@ -1,0 +1,108 @@
+# Visual editor config (Sveltia CMS — Decap/Netlify CMS compatible).
+# Local editing:  npm run cms   (then open http://localhost:4321/admin/)
+# Remote editing: needs the GitHub OAuth worker — see README.
+backend:
+  name: github
+  repo: progscratchm/maximecousot.com
+  branch: main
+  # base_url: https://YOUR-WORKER.workers.dev   # uncomment once the OAuth worker is deployed
+
+local_backend: true
+
+media_folder: public/uploads
+public_folder: /uploads
+
+site_url: https://maximecousot.com
+display_url: https://maximecousot.com
+logo_url: https://maximecousot.com/favicon.svg
+
+collections:
+  - name: posts
+    label: "📓 Notebook posts"
+    label_singular: "post"
+    folder: src/content/posts
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    summary: "{{emoji}}  {{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: "Title", widget: string, hint: "What is this page about?" }
+      - { name: date, label: "Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, default: "" }
+      - { name: emoji, label: "Emoji", widget: string, default: "💡", hint: "One emoji for the card" }
+      - { name: summary, label: "Short summary", widget: text, required: false, hint: "One or two sentences" }
+      - { name: cover, label: "Cover photo", widget: image, required: false }
+      - { name: tags, label: "Tags", widget: list, required: false, default: [] }
+      - { name: draft, label: "Keep it secret for now", widget: boolean, default: false }
+      - { name: body, label: "Write it here!", widget: markdown }
+
+  - name: projects
+    label: "🔧 Inventions"
+    label_singular: "invention"
+    folder: src/content/projects
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    summary: "{{emoji}}  {{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: "Name of the invention", widget: string }
+      - { name: date, label: "Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
+      - { name: emoji, label: "Emoji", widget: string, default: "🔧" }
+      - { name: summary, label: "Short summary", widget: text, required: false }
+      - name: status
+        label: "How is it going?"
+        widget: select
+        default: building
+        options:
+          - { label: "💭 Just an idea", value: idea }
+          - { label: "🔨 Building it", value: building }
+          - { label: "✅ It works!", value: works }
+          - { label: "🎉 Finished", value: finished }
+      - { name: tech, label: "Made with", widget: list, required: false, default: [], hint: "e.g. Python, LEGO, cardboard" }
+      - { name: cover, label: "Photo", widget: image, required: false }
+      - { name: repo, label: "Code link (GitHub)", widget: string, required: false }
+      - { name: link, label: "Try-it link", widget: string, required: false }
+      - { name: featured, label: "Show on the front page", widget: boolean, default: false }
+      - { name: draft, label: "Keep it secret for now", widget: boolean, default: false }
+      - { name: body, label: "Tell the story", widget: markdown }
+
+  - name: apps
+    label: "📱 Apps"
+    label_singular: "app"
+    folder: src/content/apps
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    summary: "{{title}}"
+    fields:
+      - { name: title, label: "App name", widget: string }
+      - { name: tagline, label: "One-line pitch", widget: string }
+      - { name: icon, label: "App icon", widget: image, required: false }
+      - { name: appStore, label: "App Store link", widget: string, required: false }
+      - { name: repo, label: "Code link", widget: string, required: false }
+      - { name: price, label: "Price", widget: string, default: "Free" }
+      - { name: order, label: "Order on the page", widget: number, default: 1, value_type: int }
+      - { name: screenshots, label: "Screenshots", widget: list, required: false, field: { name: image, label: "Screenshot", widget: image } }
+      - { name: body, label: "More about it", widget: markdown, required: false }
+
+  - name: photos
+    label: "📸 Photo wall"
+    label_singular: "photo"
+    folder: src/content/photos
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    summary: "{{title}}"
+    sortable_fields: [order, date]
+    fields:
+      - { name: title, label: "Title", widget: string }
+      - { name: date, label: "Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
+      - { name: image, label: "Photo", widget: image }
+      - { name: caption, label: "Caption", widget: string, required: false }
+      - { name: order, label: "Order on the wall", widget: number, default: 1, value_type: int }
+      - { name: body, label: "Notes", widget: markdown, required: false }

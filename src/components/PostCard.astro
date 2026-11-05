@@ -1,0 +1,21 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  summary?: string;
+  emoji?: string;
+  cover?: string;
+  meta?: string;
+  tags?: string[];
+}
+const { href, title, summary, emoji = '💡', cover, meta, tags = [] } = Astro.props;
+---
+<a class="card tilt" href={href}>
+  {cover ? <img class="thumb" src={cover} alt="" loading="lazy" /> : <span class="emoji" aria-hidden="true">{emoji}</span>}
+  <h3>{title}</h3>
+  {meta && <span class="meta">{meta}</span>}
+  {summary && <p>{summary}</p>}
+  {tags.length > 0 && (
+    <span class="tags">{tags.map((t) => <span class="tag">#{t}</span>)}</span>
+  )}
+</a>

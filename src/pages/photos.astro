@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const photos = (await getCollection('photos')).sort(
+  (a, b) => a.data.order - b.data.order || b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+<Base title="Photos" description="A wall of photos from Maxime's lab.">
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker">Proof it happened</p>
+      <h1>📸 Photo wall</h1>
+      <p class="lede">Builds, messes, experiments and happy accidents.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:28px">
+    <div class="wrap">
+      {photos.length === 0 ? (
+        <p class="empty">No photos pinned up yet.</p>
+      ) : (
+        <div class="photo-wall">
+          {photos.map((p) => (
+            <figure class="photo">
+              <img src={p.data.image} alt={p.data.caption ?? p.data.title} loading="lazy" />
+              <figcaption>{p.data.title}{p.data.caption ? ` — ${p.data.caption}` : ''}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

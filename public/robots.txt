@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://maximecousot.com/sitemap-index.xml

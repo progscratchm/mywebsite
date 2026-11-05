@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import { site } from '../site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+const { title, description = site.description, image = '/og.png' } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.tagline}`;
+const path = Astro.url.pathname;
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(path, site.url)} />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} — Notebook`} href="/rss.xml" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(path, site.url)} />
+    <meta property="og:image" content={new URL(image, site.url)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#ffc93c" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:ital,wght@0,400;0,700;0,800;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap bar">
+        <a class="brand" href="/"><span class="cog" aria-hidden="true">⚙️</span> Maxime's Lab</a>
+        <nav class="nav" aria-label="Main">
+          {site.nav.map((item) => (
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap row">
+        <p>© {year} {site.name} — built with curiosity.</p>
+        <p><a href="/rss.xml">RSS</a></p>
+        <span class="spark" aria-hidden="true">🛠️ 🔭 🚀</span>
+      </div>
+    </footer>
+  </body>
+</html>

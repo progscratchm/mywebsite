@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "maxime-site",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "PATH=$HOME/.local/node22/bin:$PATH exec npx astro dev --port 4321"],
+      "port": 4321
+    }
+  ]
+}

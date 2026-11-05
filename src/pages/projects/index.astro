@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Base title="Inventions" description="Every machine, game and gadget Maxime is building.">
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker">The workshop</p>
+      <h1>🔧 My inventions</h1>
+      <p class="lede">Some work. Some explode. All of them teach me something.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:28px">
+    <div class="wrap">
+      {projects.length === 0 ? (
+        <p class="empty">Nothing on the workbench yet.</p>
+      ) : (
+        <div class="grid three">
+          {projects.map((p) => (
+            <ProjectCard
+              href={`/projects/${p.id}/`}
+              title={p.data.title}
+              summary={p.data.summary}
+              emoji={p.data.emoji}
+              cover={p.data.cover}
+              status={p.data.status}
+              tech={p.data.tech}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>
