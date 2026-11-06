@@ -1,0 +1,6 @@
+name = "maxime-cms-auth"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://maximecousot.com,https://www.maximecousot.com"
