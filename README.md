@@ -23,23 +23,35 @@ npm run dev     # http://localhost:4321
 
 ## How Maxime adds a post, invention, app or photo
 
-Two terminals:
+Sveltia CMS can open the project folder straight from the browser — no proxy
+server, no login, no terminal gymnastics. Use Chrome or Edge (the File System
+Access API is not in Safari or Firefox).
+
+1. Start the site:
+
+   ```bash
+   npm run dev
+   ```
+
+2. Open **http://localhost:4321/admin/index.html**
+3. Click **Work with Local Repository** and pick this project's folder
+   (`~/maximecousot.com`). The browser asks once for permission to edit it.
+4. Write. Saving writes markdown straight into `src/content/`, and photos land
+   in `public/uploads/`. The dev site reloads as he types.
+
+To publish, commit and push:
 
 ```bash
-npm run cms
+git add -A && git commit -m "New post" && git push
 ```
 
-```bash
-npm run dev
-```
+GitHub Actions rebuilds and the live site updates in about a minute.
 
-Then open **http://localhost:4321/admin/** — a friendly editor with forms for
-Notebook posts, Inventions, Apps and the Photo wall. Photos are dragged in and
-land in `public/uploads/`. Saving writes markdown files straight into
-`src/content/`. Commit and push, and the site redeploys itself.
+> In dev the editor is at `/admin/index.html` — Astro's dev server doesn't serve
+> a directory index for files in `public/`. On the live site `/admin/` works.
 
-> Remote editing (from an iPad, no terminal) needs one extra piece — see
-> "Editing from anywhere" below.
+> Editing from an iPad, with no terminal at all, needs the GitHub OAuth worker —
+> see "Editing from anywhere" below.
 
 ## Content model
 
