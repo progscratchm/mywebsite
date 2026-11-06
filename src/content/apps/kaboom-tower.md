@@ -1,6 +1,6 @@
 ---
 title: Kaboom Tower
-tagline: Stack the blocks. Build it high. Then watch it all come crashing down.
+tagline: Stack the blocks. Build it high. Then watch it all come crashing down. Kabooooooom!
 icon: ''
 appStore: https://apps.apple.com/app/kaboom-tower/id0000000000
 repo: ''
