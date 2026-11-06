@@ -193,11 +193,36 @@ img { max-width: 100%; height: auto; display: block; }
 .card.tilt:nth-child(even) { rotate: .5deg; }
 
 /* ---------- app cards ---------- */
-.app-card { display: grid; grid-template-columns: 84px 1fr; gap: 18px; align-items: center; }
+.app-card {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 16px 18px;
+  align-items: start;
+}
 .app-card .icon {
   width: 84px; height: 84px; border-radius: 20px;
   border: 3px solid var(--ink); object-fit: cover; background: var(--paper-2);
   display: grid; place-items: center; font-size: 2.4rem;
+}
+.app-card .info h3 { margin-bottom: 4px; }
+.app-card .info .price { font-weight: 800; color: var(--ink-soft); font-size: .9rem; }
+.app-card .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+
+/* screenshots sit beside the text on wide cards, below it on narrow ones */
+.app-card.has-shots { grid-template-columns: 84px minmax(220px, 1fr) auto; }
+.app-card .shots {
+  grid-column: 3;
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end;
+}
+.app-card .shots img {
+  height: 300px; width: auto;         /* fixed height: no lazy-load jump */
+  border: 3px solid var(--ink); border-radius: 14px;
+  box-shadow: var(--shadow); background: var(--paper-2);
+}
+@media (max-width: 880px) {
+  .app-card.has-shots { grid-template-columns: 84px minmax(0, 1fr); }
+  .app-card .shots { grid-column: 1 / -1; justify-content: flex-start; }
+  .app-card .shots img { height: 240px; }
 }
 
 /* ---------- photo wall ---------- */
@@ -273,18 +298,3 @@ img { max-width: 100%; height: auto; display: block; }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto; }
 }
 
-/* ---------- app screenshots ---------- */
-.app-card { align-items: start; }
-.app-card .shots {
-  grid-column: 1 / -1;
-  display: flex; gap: 12px; flex-wrap: wrap;
-  margin-top: 4px;
-}
-.app-card .shots img {
-  width: 150px; max-height: 320px; object-fit: cover;
-  border: 3px solid var(--ink); border-radius: var(--radius-sm);
-  box-shadow: var(--shadow); background: var(--paper-2);
-}
-@media (max-width: 520px) {
-  .app-card .shots img { width: 120px; }
-}

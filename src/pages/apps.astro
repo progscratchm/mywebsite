@@ -19,20 +19,20 @@ const apps = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.
       ) : (
         <div class="grid two">
           {apps.map((a) => (
-            <div class="card app-card">
+            <div class={`card app-card${a.data.screenshots.length > 0 ? ' has-shots' : ''}`}>
               {a.data.icon ? (
                 <img class="icon" src={a.data.icon} alt={`${a.data.title} icon`} />
               ) : (
                 <span class="icon" aria-hidden="true">📱</span>
               )}
-              <div>
+              <div class="info">
                 <h3>{a.data.title}</h3>
                 <p>{a.data.tagline}</p>
-                <p class="meta">{a.data.price}</p>
-                <p style="margin-top:10px">
+                <p class="price">{a.data.price}</p>
+                <div class="actions">
                   {a.data.appStore && <a class="btn" href={a.data.appStore}>App Store →</a>}
-                  {a.data.repo && <a class="btn ghost" href={a.data.repo} style="margin-left:8px">Code 💻</a>}
-                </p>
+                  {a.data.repo && <a class="btn ghost" href={a.data.repo}>Code 💻</a>}
+                </div>
               </div>
               {a.data.screenshots.length > 0 && (
                 <div class="shots">
