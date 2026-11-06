@@ -272,3 +272,19 @@ img { max-width: 100%; height: auto; display: block; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto; }
 }
+
+/* ---------- app screenshots ---------- */
+.app-card { align-items: start; }
+.app-card .shots {
+  grid-column: 1 / -1;
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-top: 4px;
+}
+.app-card .shots img {
+  width: 150px; max-height: 320px; object-fit: cover;
+  border: 3px solid var(--ink); border-radius: var(--radius-sm);
+  box-shadow: var(--shadow); background: var(--paper-2);
+}
+@media (max-width: 520px) {
+  .app-card .shots img { width: 120px; }
+}

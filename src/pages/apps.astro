@@ -34,6 +34,13 @@ const apps = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.
                   {a.data.repo && <a class="btn ghost" href={a.data.repo} style="margin-left:8px">Code 💻</a>}
                 </p>
               </div>
+              {a.data.screenshots.length > 0 && (
+                <div class="shots">
+                  {a.data.screenshots.map((src) => (
+                    <img src={src} alt={`${a.data.title} screenshot`} loading="lazy" />
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
