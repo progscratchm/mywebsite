@@ -100,6 +100,19 @@ tick **Enforce HTTPS** once the certificate is issued (can take up to an hour).
 
 DNS propagation usually takes 10–60 minutes.
 
+## Keep this repo public
+
+GitHub Pages does not serve private repositories on the free plan. Making this
+repo private **deletes the Pages site**, custom domain and all — the site 404s
+immediately, and restoring it means re-creating Pages, re-setting the domain,
+re-enabling HTTPS and redeploying.
+
+Nothing sensitive lives here: the content is the public site, the OAuth client
+ID is public by design, and the client secret is stored in Cloudflare, not git.
+
+If the repo genuinely must be private, move hosting to Cloudflare Pages, which
+serves private repos for free.
+
 ## Editing from anywhere (optional, do it later)
 
 The local editor needs a terminal. To let Maxime edit from any browser, Sveltia
