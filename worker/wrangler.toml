@@ -3,4 +3,7 @@ main = "src/index.js"
 compatibility_date = "2026-01-01"
 
 [vars]
+# The OAuth client ID is public by design — it appears in the redirect URL.
+# The client secret is NOT here; set it with `wrangler secret put GITHUB_CLIENT_SECRET`.
+GITHUB_CLIENT_ID = "Ov23li37RMfKUkvgfK2W"
 ALLOWED_ORIGINS = "https://maximecousot.com,https://www.maximecousot.com"

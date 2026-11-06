@@ -1,11 +1,13 @@
 # Visual editor config (Sveltia CMS — Decap/Netlify CMS compatible).
-# Local editing:  npm run cms   (then open http://localhost:4321/admin/)
-# Remote editing: needs the GitHub OAuth worker — see README.
+# Local editing:  npm run dev, then http://localhost:4321/admin/index.html
+#                 and "Work with Local Repository" (Chrome/Edge only).
+# Remote editing: "Sign In with GitHub" — brokered by the Cloudflare Worker
+#                 in worker/, since GitHub Pages cannot hold a client secret.
 backend:
   name: github
   repo: progscratchm/mywebsite
   branch: main
-  # base_url: https://YOUR-WORKER.workers.dev   # uncomment once the OAuth worker is deployed
+  base_url: https://maxime-cms-auth.cousotmaxime.workers.dev
 
 local_backend: true
 
