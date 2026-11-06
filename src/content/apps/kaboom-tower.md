@@ -1,7 +1,7 @@
 ---
 title: Kaboom Tower
 tagline: Stack the blocks. Build it high. Then watch it all come crashing down. Kabooooooom! So fun :)
-icon: ''
+icon: /uploads/AppIcon.png
 appStore: https://apps.apple.com/app/kaboom-tower/id0000000000
 repo: ''
 price: $0.99
